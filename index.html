@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Weather Dashboard</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <nav class="navbar navbar-dark bg-dark text-center">
+    <h1 class="text-light m-auto">Weather Dashboard</h1>
+  </nav>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12 col-md-5 bg-light">
+        <form class="form-inline" id="city-search">
+          <h4>Search for a City:</h4>
+          <input type="text" class="form-control" id="search-input">
+          <button type="submit" class="btn btn-primary form-control">S</button>
+        </form>
+
+        <div class="card hide" id="search-history">
+
+        </div>
+      </div>
+      <div class="col-12 col-md-7">
+        <div class="row">
+          <div class="col-12">
+            <div class="card hide" id="current-weather">
+
+            </div>
+          </div>
+          <div class="col-12 hide" id="five-day">
+            <h3>5-Day Forecast:</h3>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+  <script src="./script.js"></script>
+</body>
+</html>
