@@ -2,6 +2,7 @@
 var $searchForm = document.querySelector("#city-search");
 var $searchInput = document.querySelector("#search-input");
 var $weatherCard = document.querySelector("#current-weather");
+var $fivedayDiv = document.querySelector("#five-day");
 
 // variables for APIs
 var APIkey = "6aaa464bb00fa4a19aa146dac6e6844d";
@@ -84,7 +85,7 @@ function displayCurrentweather(weatherResponse){
   //console.log(weatherResponse);
   //h1 with city name, date, weather icon
   var $weatherHeader = document.createElement("h1");
-  
+
   var timeNow = moment();
   var currentDate = "(" + timeNow.format("MM/DD/YYYY") + ")";
 
@@ -94,6 +95,7 @@ function displayCurrentweather(weatherResponse){
   //set up img to display weather icon
   var $weatherIcon = document.createElement("img");
   $weatherIcon.setAttribute("src", "http://openweathermap.org/img/w/" + weatherResponse.weather[0].icon + ".png")
+  $weatherIcon.setAttribute("alt", weatherResponse.weather[0].main + " - " + weatherResponse.weather[0].description);
 
   //set up div for temp
   var $weatherTemp = document.createElement("div");
@@ -133,10 +135,54 @@ function displayCurrentUV(uvResponse){
 
 //add 5Day forecast response to page:
 function displayForecast(forecastResponse){
-  console.log(forecastResponse);
+  console.log(forecastResponse.list);
   //is returned for every 3 hours but we want 5-day
   //let's loop thru response and check if the time for this response is 12pm... if so we will grab the info.
+  for (var i = 0; i < forecastResponse.cnt; i ++) {
+    var responseRef = forecastResponse.list[i];
+    //console.log(responseRef);
+    //console.log(i);
+    //grab the date/time of this forecast
+    var responseDate = moment(responseRef.dt_txt);
+    //if the time is 12pm
+    //console.log(responseDate);
 
+    if (parseInt(responseDate.format("HH")) == 12){
+      console.log("hi");
+      console.log(responseRef);
+
+      var $forecastCard = document.createElement("div");
+      $forecastCard.classList.add( "card", "bg-primary");
+
+      var $cardBody = document.createElement("div");
+      $cardBody.classList.add("card-body", "text-light");
+
+      var $forecastTitle = document.createElement("h5");
+      $forecastTitle.classList.add("card-title");
+      $forecastTitle.textContent = responseDate.format("MM/DD/YYYY");
+
+      var $forecastIcon = document.createElement("img");
+      $forecastIcon.setAttribute("src", "http://openweathermap.org/img/w/" + responseRef.weather[0].icon + ".png");
+      $forecastIcon.setAttribute("alt", responseRef.weather[0].main + " - " + responseRef.weather[0].description);
+
+      var $forecastTemp = document.createElement("div");
+      $forecastTemp.textContent = "Temp: " + (responseRef.main.temp) + " F°";
+
+      var $forecastHumid = document.createElement("div");
+      $forecastHumid.textContent = "Humidity: " + (responseRef.main.humidity) + "%"; 
+
+      //adding everything to cardbody
+      $cardBody.appendChild($forecastTitle);
+      $cardBody.appendChild($forecastIcon);
+      $cardBody.appendChild($forecastTemp);
+      $cardBody.appendChild($forecastHumid);
+
+      $forecastCard.appendChild($cardBody);
+      $fivedayDiv.appendChild($forecastCard);
+    }
+  }
+  console.log("done");
+  $fivedayDiv.classList.remove("hide");
 }
 
 /* ----- EVENT LISTENERS ----- */
