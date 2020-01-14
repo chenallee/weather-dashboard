@@ -10,7 +10,7 @@ var searchHistory = [];
 /* ----- FUNCTIONS ----- */
 function searchHandler(searchTerm) {
   //call currentweather & UV AJAX request
-  var searchCoords = currentweatherSearch(searchTerm);
+  currentweatherSearch(searchTerm);
   //call 5Day AJAX request
   fivedaySearch(searchTerm);
 }
@@ -35,9 +35,21 @@ function currentweatherSearch(searchTerm) {
 }
 
 //call current UV API
-function currentUVSearch(searchCoords) {
-  console.log("UV| ");
-  console.log(searchCoords);
+function currentUVSearch(cityCoords) {
+  // console.log("UV| ");
+  // console.log(cityCoords);
+  //create string of coords to use as parameters for UV API call
+  var searchCoords = "lat=" + cityCoords.lat + "&lon=" + cityCoords.lon;
+  // console.log(searchCoords);
+  var uvUrl = urlStart + "uvi?" + searchCoords + "&APPID=" + APIkey;
+
+  $.ajax({
+    url: uvUrl,
+    method: "GET"
+  }).then(function(uvResponse){
+    console.log(uvResponse);
+  });
+
 }
 
 //call forecast API
