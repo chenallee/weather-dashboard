@@ -1,6 +1,7 @@
 // DOM variables
 var $searchForm = document.querySelector("#city-search");
 var $searchInput = document.querySelector("#search-input");
+var $weatherCard = document.querySelector("#current-weather");
 
 // variables for APIs
 var APIkey = "6aaa464bb00fa4a19aa146dac6e6844d";
@@ -35,9 +36,11 @@ function currentweatherSearch(searchTerm) {
     url: weatherUrl,
     method: "GET"
   }).then(function (weatherResponse) {
-    console.log(weatherResponse);
+    //console.log(weatherResponse);
     //call function to create html elements showing response:
+    displayCurrentweather(weatherResponse);
 
+    //send coordinates to UV search for API call
     cityCoords = weatherResponse.coord;
     currentUVSearch(cityCoords);
   });  
@@ -56,8 +59,9 @@ function currentUVSearch(cityCoords) {
     url: uvUrl,
     method: "GET"
   }).then(function(uvResponse){
-    console.log(uvResponse);
+    //console.log(uvResponse);
     //call function to create html element for uv response:
+    displayCurrentUV(uvResponse);
   });
 
 }
@@ -79,8 +83,45 @@ function fivedaySearch(searchTerm) {
 }
 
 //add current weather response to page:
+function displayCurrentweather(weatherResponse){
+  console.log(weatherResponse);
+  //h1 with city name, date, weather icon
+  var $weatherHeader = document.createElement("h1");
+  //var toDay = new Date();
+  //var currentDate = "(" + Date.prototype.getMonth() + "/" + Date.prototype.getDate() + "/" + Date.prototype.getFullYear() + ")";
+  //moment might be easier
+  $weatherHeader.textContent = weatherResponse.name;
+  
+  var $weatherIcon = document.createElement("img");
+  $weatherIcon.setAttribute("src", "http://openweathermap.org/img/w/" + weatherResponse.weather[0].icon + ".png")
+
+  $weatherHeader.appendChild($weatherIcon);
+
+  var $weatherTemp = document.createElement("div");
+  $weatherTemp.textContent = "Temperature: " + (weatherResponse.main.temp) + " F°";
+
+  var $weatherHumid = document.createElement("div");
+  $weatherHumid.textContent = "Humidity: " + (weatherResponse.main.humidity) + "%";
+
+  var $weatherWind = document.createElement("div");
+  $weatherWind.textContent = "Wind Speed: " + (weatherResponse.wind.speed) + " MPH";
+
+  $weatherCard.appendChild($weatherHeader);
+  $weatherCard.appendChild($weatherTemp);
+  $weatherCard.appendChild($weatherHumid);
+  $weatherCard.appendChild($weatherWind);
+  
+}
 
 //add UV index response to page:
+function displayCurrentUV(uvResponse){
+  var $weatherUV = document.createElement("div");
+  $weatherUV.textContent = "UV Index: " + (uvResponse.value);
+
+  $weatherCard.appendChild($weatherUV);
+  $weatherCard.classList.remove("hide");
+
+}
 
 //add 5Day forecast response to page:
 
