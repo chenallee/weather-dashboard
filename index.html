@@ -14,29 +14,40 @@
   </nav>
   <div class="container-fluid">
     <div class="row">
-      <div class="col-12 col-md-5 bg-light">
+      <div class="col-12 col-md-5 col-lg-3 bg-light">
         <form class="form-inline" id="city-search">
-          <h4>Search for a City:</h4>
+          <h4>Search for a City: </h4>
           <input type="text" class="form-control" id="search-input">
           <button type="submit" class="btn btn-primary form-control">S</button>
         </form>
 
         <div class="card hide" id="search-history">
+          <div class="card-body" id="weather-body">
+
+          </div>
 
         </div>
       </div>
-      <div class="col-12 col-md-7">
-        <div class="row">
-          <div class="col-12">
-            <div class="card hide" id="current-weather">
+      <div class="col-12 col-md-7 col-lg-9">
+       
+          <div class="row">
+            <div class="card hide col-12" id="current-weather">
               <!-- maybe create card body for better formatting -->
 
             </div>
           </div>
-          <div class="col-12 hide" id="five-day">
-            <h3>5-Day Forecast:</h3>
+          <div class="row hide" id="forecast-section">
+            <div class="col-12">
+              <h3>5-Day Forecast:</h3>
+            </div>
+            <div class="col-12">
+              <div class="row d-flex justify-content-lg-between" id="five-day">
+
+              </div>
+            </div>
+            
           </div>
-        </div>
+        
       </div>
       
     </div>

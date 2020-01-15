@@ -2,6 +2,8 @@
 var $searchForm = document.querySelector("#city-search");
 var $searchInput = document.querySelector("#search-input");
 var $weatherCard = document.querySelector("#current-weather");
+var $weatherBody = document.querySelector("#weather-body");
+var $forecastSection = document.querySelector("#forecast-section");
 var $fivedayDiv = document.querySelector("#five-day");
 
 // variables for APIs
@@ -13,16 +15,35 @@ var searchHistory = [];
 
 /* ----- FUNCTIONS ----- */
 //add search term to history [] & local storage
+function addTerm(searchTerm){
+  //if there's local storage, 
+  if(localStorage.getItem("searchHistory")){
+    //get items from local storage and add them to searchHistory[]
+    searchHistory = JSON.parse(localStorage.getItem("searchHistory"));
+  }
+//either way add searchTerm to searchHistory[]
+searchHistory.push(searchTerm);
+//then store the updated searchHistory[] in local storage
+localStorage.setItem("searchHistory", JSON.stringify(searchHistory));
+
+//call the function to update search history display
+updateHistory();
+}
 
 //update search history display from local storage
 //if it exists let's run a searchHandler() on the most recent
+function updateHistory(){
+  console.log(searchHistory);
+}
 
 //handle clearing response divs and calling functions to search APIs
 function searchHandler(searchTerm) {
   //hide card so if elements aren't added all at once the user doesn't see them popping in
   $weatherCard.classList.add("hide");
+  $forecastSection.classList.add("hide");
   //clear results divs:
-  $weatherCard.textContent = "";
+  $weatherBody.textContent = "";
+  $fivedayDiv.textContent="";
   //call currentweather & UV AJAX request:
   currentweatherSearch(searchTerm);
   //call 5Day AJAX request:
@@ -113,11 +134,12 @@ function displayCurrentweather(weatherResponse){
   $weatherHeader.appendChild($weatherIcon);
 
   //add everything to card
-  $weatherCard.appendChild($weatherHeader);
-  $weatherCard.appendChild($weatherTemp);
-  $weatherCard.appendChild($weatherHumid);
-  $weatherCard.appendChild($weatherWind);
+  $weatherBody.appendChild($weatherHeader);
+  $weatherBody.appendChild($weatherTemp);
+  $weatherBody.appendChild($weatherHumid);
+  $weatherBody.appendChild($weatherWind);
   
+  $weatherCard.appendChild($weatherBody);
 }
 
 //add UV index response to page:
@@ -127,7 +149,7 @@ function displayCurrentUV(uvResponse){
   $weatherUV.textContent = "UV Index: " + (uvResponse.value);
 
   //add uv to card
-  $weatherCard.appendChild($weatherUV);
+  $weatherBody.appendChild($weatherUV);
   //show current weather card since last element has been added:
   $weatherCard.classList.remove("hide");
 
@@ -135,7 +157,8 @@ function displayCurrentUV(uvResponse){
 
 //add 5Day forecast response to page:
 function displayForecast(forecastResponse){
-  console.log(forecastResponse.list);
+  
+  //console.log(forecastResponse.list);
   //is returned for every 3 hours but we want 5-day
   //let's loop thru response and check if the time for this response is 12pm... if so we will grab the info.
   for (var i = 0; i < forecastResponse.cnt; i ++) {
@@ -148,11 +171,9 @@ function displayForecast(forecastResponse){
     //console.log(responseDate);
 
     if (parseInt(responseDate.format("HH")) == 12){
-      console.log("hi");
-      console.log(responseRef);
 
       var $forecastCard = document.createElement("div");
-      $forecastCard.classList.add( "card", "bg-primary");
+      $forecastCard.classList.add( "card", "bg-primary", "col-12", "col-lg-2");
 
       var $cardBody = document.createElement("div");
       $cardBody.classList.add("card-body", "text-light");
@@ -181,9 +202,11 @@ function displayForecast(forecastResponse){
       $fivedayDiv.appendChild($forecastCard);
     }
   }
-  console.log("done");
-  $fivedayDiv.classList.remove("hide");
+  //console.log("done");
+  $forecastSection.classList.remove("hide");
 }
+
+//on page load if there's local storage, we want to display a search for the most recently searched term
 
 /* ----- EVENT LISTENERS ----- */
 //on form submit, get text typed and then pass it to other functions
@@ -193,14 +216,14 @@ $searchForm.addEventListener("submit", function (event) {
   if (!searchTerm) {
     return false;
   }
-  console.log(searchTerm);
+  //console.log(searchTerm);
   //first: send it to search weather API
   searchHandler(searchTerm);
 
-  //next: clear input
   $searchInput.value = "";
 
   //then: add term to history []
+  addTerm(searchTerm);
 
   //finally: update history display
 });
