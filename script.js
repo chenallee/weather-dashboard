@@ -16,6 +16,12 @@ var urlStart = "http://api.openweathermap.org/data/2.5/";
 var searchHistory = [];
 
 /* ----- FUNCTIONS ----- */
+function landingDisplay(){
+  //on page load we want to display most recent search forecast
+  updateHistory();
+  searchHandler(searchHistory[searchHistory.length - 1]);  
+}
+
 //add search term to history [] & local storage
 function addTerm(searchTerm){
   //if there's local storage, 
@@ -227,7 +233,7 @@ function displayForecast(forecastResponse){
 }
 
 //on page load if there's local storage, we want to display a search for the most recently searched term
-
+landingDisplay();
 
 /* ----- EVENT LISTENERS ----- */
 //on form submit, get text typed and then pass it to other functions
