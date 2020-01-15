@@ -5,12 +5,14 @@ var $weatherCard = document.querySelector("#current-weather");
 var $weatherBody = document.querySelector("#weather-body");
 var $forecastSection = document.querySelector("#forecast-section");
 var $fivedayDiv = document.querySelector("#five-day");
+var $historyCard = document.querySelector("#history-card");
+var $searchHistory = document.querySelector("#search-history");
 
 // variables for APIs
 var APIkey = "6aaa464bb00fa4a19aa146dac6e6844d";
 var urlStart = "http://api.openweathermap.org/data/2.5/";
 
-//
+//search history array which is mirrored in local storage
 var searchHistory = [];
 
 /* ----- FUNCTIONS ----- */
@@ -39,13 +41,21 @@ updateHistory();
 //update search history display from local storage
 //if it exists let's run a searchHandler() on the most recent
 function updateHistory(){
-  console.log(searchHistory);
-
+  //clear searchHistory div
+  $searchHistory.textContent = "";
+  //console.log(searchHistory);
+  searchHistory = JSON.parse(localStorage.getItem("searchHistory"));
   //i want to display the array most recently added first so loop backwards
-  // for (var j = searchHistory.length - 1; i >= 0; i --){
+  for (var j = searchHistory.length - 1; j >= 0; j --){
+    //console.log(searchHistory[j]);
+    var $pastSearch = document.createElement("li");
+    $pastSearch.textContent = searchHistory[j];
+    $pastSearch.classList.add("list-group-item");
+    $pastSearch.setAttribute("data-value", searchHistory[j]);
 
-  // }
-
+    $searchHistory.appendChild($pastSearch);
+  }
+  $historyCard.classList.remove("hide");
 }
 
 //handle clearing response divs and calling functions to search APIs
@@ -150,8 +160,6 @@ function displayCurrentweather(weatherResponse){
   $weatherBody.appendChild($weatherTemp);
   $weatherBody.appendChild($weatherHumid);
   $weatherBody.appendChild($weatherWind);
-  
-  $weatherCard.appendChild($weatherBody);
 }
 
 //add UV index response to page:
@@ -185,10 +193,10 @@ function displayForecast(forecastResponse){
     if (parseInt(responseDate.format("HH")) == 12){
 
       var $forecastCard = document.createElement("div");
-      $forecastCard.classList.add( "card", "bg-primary", "col-12", "col-lg-2");
+      $forecastCard.classList.add( "card", "bg-primary", "col-12", "col-lg-2", "p-0");
 
       var $cardBody = document.createElement("div");
-      $cardBody.classList.add("card-body", "text-light");
+      $cardBody.classList.add("card-body", "text-light", "p-2");
 
       var $forecastTitle = document.createElement("h5");
       $forecastTitle.classList.add("card-title");
@@ -238,6 +246,9 @@ $searchForm.addEventListener("submit", function (event) {
   //then: add term to history []
   addTerm(searchTerm);
 
-  //finally: update history display
+  //finally: update history display - is done thru addTerm
 });
 
+$searchHistory.addEventListener("click", function(event){
+  event.preventDefault();
+});

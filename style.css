@@ -1,3 +1,5 @@
 .hide {
   display: none;
 }
+
+/* on small screens we want search history not to display EVER */
