@@ -2,4 +2,12 @@
   display: none;
 }
 
+li:hover{
+  background-color:#f8f9fa;
+}
+
+li:active{
+  background-color: lightgray;
+}
+
 /* on small screens we want search history not to display EVER */

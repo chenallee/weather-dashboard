@@ -251,4 +251,12 @@ $searchForm.addEventListener("submit", function (event) {
 
 $searchHistory.addEventListener("click", function(event){
   event.preventDefault();
+  var itemClicked = event.target;
+  if(itemClicked.matches("li")){
+    var clickSearch = itemClicked.getAttribute("data-value");
+    //i want to splice the item clicked from the array and then readd it... but since i am allowing repeated items onto the array it's difficult rn
+    //run a search with the term clicked
+    searchHandler(clickSearch);
+    addTerm(clickSearch);
+  }
 });
