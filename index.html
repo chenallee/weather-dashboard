@@ -6,6 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Weather Dashboard</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" />
   <link rel="stylesheet" href="./style.css">
 </head>
 <body>
@@ -14,11 +15,11 @@
   </nav>
   <div class="container-fluid">
     <div class="row">
-      <div class="col-12 col-md-5 col-lg-4 col-xl-3 bg-light">
-        <form class="form-inline" id="city-search">
+      <div class="col-12 col-md-5 col-lg-4 col-xl-3 pt-3 bg-light">
+        <form class="form-inline mb-3" id="city-search">
           <h4>Search for a City: </h4>
           <input type="text" class="form-control" id="search-input">
-          <button type="submit" class="btn btn-primary form-control">S</button>
+          <button type="submit" class="btn btn-primary form-control"><i class="fas fa-search"></i></button>
         </form>
 
         <div class="card hide" id="history-card">
@@ -29,7 +30,7 @@
       </div>
       <div class="col-12 col-md-7 col-lg-8 col-xl-9">
        
-          <div class="row">
+          <div class="row pt-md-3 pr-md-3 pl-md-3">
             <div class="card hide col-12" id="current-weather">
               <div class="card-body" id="weather-body">
               
@@ -37,7 +38,7 @@
 
             </div>
           </div>
-          <div class="row hide" id="forecast-section">
+          <div class="row hide pt-3 p-md-3" id="forecast-section">
             <div class="col-12">
               <h3>5-Day Forecast:</h3>
             </div>

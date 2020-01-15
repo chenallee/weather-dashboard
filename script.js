@@ -18,8 +18,10 @@ var searchHistory = [];
 /* ----- FUNCTIONS ----- */
 function landingDisplay(){
   //on page load we want to display most recent search forecast
-  updateHistory();
-  searchHandler(searchHistory[searchHistory.length - 1]);  
+  if (localStorage.getItem("searchHistory")) {
+    updateHistory();
+    searchHandler(searchHistory[searchHistory.length - 1]);
+  }
 }
 
 //add search term to history [] & local storage
@@ -199,7 +201,7 @@ function displayForecast(forecastResponse){
     if (parseInt(responseDate.format("HH")) == 12){
 
       var $forecastCard = document.createElement("div");
-      $forecastCard.classList.add( "card", "bg-primary", "col-12", "col-lg-2", "p-0");
+      $forecastCard.classList.add( "card", "bg-primary", "col-10", "col-lg-2", "p-0", "mx-auto", "mt-3");
 
       var $cardBody = document.createElement("div");
       $cardBody.classList.add("card-body", "text-light", "p-2");
