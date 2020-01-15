@@ -23,6 +23,12 @@ function addTerm(searchTerm){
   }
 //either way add searchTerm to searchHistory[]
 searchHistory.push(searchTerm);
+
+//i dont want to store thousands of search terms so if the array is too big i want to remove the oldest one
+if(searchHistory.length > 5){
+  searchHistory.shift();
+}
+
 //then store the updated searchHistory[] in local storage
 localStorage.setItem("searchHistory", JSON.stringify(searchHistory));
 
@@ -34,6 +40,12 @@ updateHistory();
 //if it exists let's run a searchHandler() on the most recent
 function updateHistory(){
   console.log(searchHistory);
+
+  //i want to display the array most recently added first so loop backwards
+  // for (var j = searchHistory.length - 1; i >= 0; i --){
+
+  // }
+
 }
 
 //handle clearing response divs and calling functions to search APIs
@@ -207,6 +219,7 @@ function displayForecast(forecastResponse){
 }
 
 //on page load if there's local storage, we want to display a search for the most recently searched term
+
 
 /* ----- EVENT LISTENERS ----- */
 //on form submit, get text typed and then pass it to other functions
