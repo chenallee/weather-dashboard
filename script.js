@@ -11,7 +11,7 @@ var $errorMsg = document.querySelector("#error-message");
 
 // variables for APIs
 var APIkey = "6aaa464bb00fa4a19aa146dac6e6844d";
-var urlStart = "http://api.openweathermap.org/data/2.5/";
+var urlStart = "https://api.openweathermap.org/data/2.5/";
 
 //search history array which is mirrored in local storage
 var searchHistory = [];
@@ -149,7 +149,7 @@ function displayCurrentweather(weatherResponse){
   //maybe have City, Date, Icon 3 cols that stack on mobile?
   //set up img to display weather icon
   var $weatherIcon = document.createElement("img");
-  $weatherIcon.setAttribute("src", "http://openweathermap.org/img/w/" + weatherResponse.weather[0].icon + ".png")
+  $weatherIcon.setAttribute("src", "https://openweathermap.org/img/w/" + weatherResponse.weather[0].icon + ".png")
   $weatherIcon.setAttribute("alt", weatherResponse.weather[0].main + " - " + weatherResponse.weather[0].description);
 
   //set up div for temp
@@ -216,7 +216,7 @@ function displayForecast(forecastResponse){
       $forecastTitle.textContent = responseDate.format("MM/DD/YYYY");
 
       var $forecastIcon = document.createElement("img");
-      $forecastIcon.setAttribute("src", "http://openweathermap.org/img/w/" + responseRef.weather[0].icon + ".png");
+      $forecastIcon.setAttribute("src", "https://openweathermap.org/img/w/" + responseRef.weather[0].icon + ".png");
       $forecastIcon.setAttribute("alt", responseRef.weather[0].main + " - " + responseRef.weather[0].description);
 
       var $forecastTemp = document.createElement("div");
