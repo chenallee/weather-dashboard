@@ -7,6 +7,7 @@ var $forecastSection = document.querySelector("#forecast-section");
 var $fivedayDiv = document.querySelector("#five-day");
 var $historyCard = document.querySelector("#history-card");
 var $searchHistory = document.querySelector("#search-history");
+var $errorMsg = document.querySelector("#error-message");
 
 // variables for APIs
 var APIkey = "6aaa464bb00fa4a19aa146dac6e6844d";
@@ -68,6 +69,7 @@ function updateHistory(){
 
 //handle clearing response divs and calling functions to search APIs
 function searchHandler(searchTerm) {
+  $errorMsg.classList.add("hide");
   //hide card so if elements aren't added all at once the user doesn't see them popping in
   $weatherCard.classList.add("hide");
   $forecastSection.classList.add("hide");
@@ -89,7 +91,9 @@ function currentweatherSearch(searchTerm) {
   $.ajax({
     url: weatherUrl,
     method: "GET"
+    // error: handleError()
   }).then(function (weatherResponse) {
+    //console.log(weatherResponse);
     //call function to create html elements showing response:
     displayCurrentweather(weatherResponse);
 
@@ -180,6 +184,7 @@ function displayCurrentUV(uvResponse){
   $weatherBody.appendChild($weatherUV);
   //show current weather card since last element has been added:
   $weatherCard.classList.remove("hide");
+  //console.log("hi");
 
 }
 
